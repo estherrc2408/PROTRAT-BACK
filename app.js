@@ -1,9 +1,14 @@
 const express = require('express');
 const app=express();
 
+//config .env
+// require('dotenv').config();
+
+
+
 const port=process.env.PORT||3000;
 
-//Body-parser middleware
+//Body-parser middleware JSON y urlencoded
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
