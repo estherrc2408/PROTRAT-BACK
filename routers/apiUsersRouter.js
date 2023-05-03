@@ -5,9 +5,10 @@ const {getUsers,getUsersBySearch,getOneUser,createUser,deleteUser,updateUser} = 
 const router=express.Router();
 
 
-router.get('/',getUsers);
+
 router.get('/nick/',getUsersBySearch);
-router.get('/id/',getOneUser)
+router.get('/id/:id',getOneUser);
+router.get('/',getUsers);
 
 //  getAllUsers Usado solo por home del admin, vista de todos los usuarios
 //  getUserById Usado por la vista detalle de usuario

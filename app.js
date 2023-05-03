@@ -14,9 +14,12 @@ app.use(express.json());
 
 app.use(express.static(__dirname+'/public'));
 
+//Routers auth
+app.use('/login',require('./routers/logRouter'));
+
 //Routers CRUD
 app.use('/api/users',require('./routers/apiUsersRouter'));
-// app.use('/api/proyects',require('./routers/apiProyectsRouter'));
+app.use('/api/projects',require('./routers/apiProjectsRouter'));
 // app.use('/api/gallery',require('./routers/apiGalleryRouter'));
 // app.use('/api/comments',require('./routers/apiCommentsRouter'));
 
