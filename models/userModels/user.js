@@ -62,13 +62,27 @@ const getUserById = async (id) =>{
 }
 
 //CREAR UN NUEVO USUARIO
-const createUserM = async ({email,password,nickname,firstName,lastName,birthDate,rol}) =>{
+const createUserM = async ({email,password,nickname,firstName,lastName,birthDate,rol},imageName) =>{
     let client;
-    password = await bcryptjs.hash(password,6);
 
     try{
+        password = await bcryptjs.hash(password,6);
+
+        const values = [
+            email,
+            password,
+            nickname,
+            firstName,
+            lastName,
+            birthDate,
+            rol,
+            imageName
+          ];
+
         client = await pool.connect();
-        await client.query(createUserQ,[email,password,nickname,firstName,lastName,birthDate,rol]);
+        await client.query(createUserQ,values);
+
+        return {ok:true};
     }catch(error){
         console.log(error)
         return error;
