@@ -3,10 +3,15 @@ const validateQueries = {
     `
     SELECT email, password
     FROM users
-    WHERE email=$1
+    WHERE email=$1;
     `
     ,
-    validatePass:``
+    validatePass:
+    `
+    SELECT nickname
+    FROM users
+    WHERE email=$1 AND password=$2
+    `
 
 };
 

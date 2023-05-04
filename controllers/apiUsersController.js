@@ -1,4 +1,4 @@
-const { query } = require('express');
+
 const { getAllUsers, getUsersByNickname, getUserById, createUserM, updateUserM, deleteUserM } = require('../models/userModels/user');
 const { storage, upload } = require('../config/multer')
 const { multer } = require('multer');

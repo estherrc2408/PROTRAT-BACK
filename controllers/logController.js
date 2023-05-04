@@ -1,10 +1,22 @@
-const {validateLogM} = require('../models/logModels')
+const {validateLogM} = require('../models/logModels/log')
 
 const validateLog = async(req,res)=>{
     let {body} = req;
+    
     try{
         const petition = await validateLogM(body);
-
+        console.log(petition);
+        if(petition.nickname){
+            res.status(200).json({
+                ok:true,
+                msg:'Usuario accediendo'
+            })
+        }else{
+            res.status(404).json({
+                ok:false,
+                msg:petition
+            })
+        }     
     }catch(error){
         res.status(500).json({
             ok: false,
