@@ -13,7 +13,8 @@ const validateLog = async(req,res)=>{
                 msg:`Welcome ${petition.nickname}!`,
                 id:petition.iduser,
                 nickname:petition.nickname,
-                token:petition.token
+                token:petition.token,
+                rol:petition.rol
             })
         }else{
             res.status(404).json({

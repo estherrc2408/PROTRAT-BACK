@@ -47,12 +47,11 @@ const getUserProjectsM = async(id) =>{
     return response
 }
 //OBTENER DATOS DE UN PROYECTO CONCRETO POR SU ID
-const getOneProjectM = async(id) =>{
-    console.log(id);
+const getOneProjectM = async(nickname) =>{
     let client, response;
     try{
         client = await pool.connect();
-        const data = await client.query(getOneProjectQ,[id]);
+        const data = await client.query(getOneProjectQ,[nickname]);
         response = data.rows;   
     }catch(error){
         throw error;

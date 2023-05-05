@@ -1,11 +1,11 @@
-const { getAllProjectsM, getUserProjectsM, getOneProjectM, createProjectM, deleteProjectM, updateProjectM} = require ('../models/projectModels/project')
+const { getAllProjectsM, getUserProjectsM, getOneProjectM, createProjectM, deleteProjectM, updateProjectM } = require('../models/projectModels/project')
 
 const getAllProjects = async (_req, res) => {
     let data;
     try {
-        console.log('hallando todos los proyectos'); 
+        console.log('hallando todos los proyectos');
         data = await getAllProjectsM()
-              
+
         res.status(200).json({
             ok: true,
             data
@@ -18,21 +18,28 @@ const getAllProjects = async (_req, res) => {
         })
     }
 };
-const getUserProjects = async (req,res) =>{
+const getUserProjects = async (req, res) => {
     let data;
-    let {id} = req.params;
+    let { nickname } = req.params;
+    console.log(req.params)
     try {
-        if (id) {
+        if (nickname) {
             console.log('hallando proyectos del usuario');
-            data = await getUserProjectsM(id);
+            data = await getUserProjectsM(nickname);
         }
         //data puede ser: un array con los proyectos
         //                  un string de El usuario aun no tiene registros
-        res.status(200).json({
-            ok: true,
-            data
-        })
-
+        if (typeof data == 'string') {
+            res.status(200).json({
+                ok: false,
+                data
+            })
+        } else {
+            res.status(200).json({
+                ok: true,
+                data
+            })
+        }
     } catch (error) {
         res.status(500).json({
             ok: false,
@@ -40,10 +47,10 @@ const getUserProjects = async (req,res) =>{
         })
     }
 }
-const getOneProject = async(req,res)=>{
+const getOneProject = async (req, res) => {
     let data;
-    let {id} = req.params;
-    try{
+    let { id } = req.params;
+    try {
         if (id) {
             console.log('hallando un proyecto');
             data = await getOneProjectM(id);
@@ -72,11 +79,11 @@ const getOneProject = async(req,res)=>{
 "principal_img":"https://i.blogs.es/a13db0/castor/450_1000.jpg"
 }
 */
-const createProject = async (req,res) => {
-    let {body} = req;
-    const iduser =req.params.id;
+const createProject = async (req, res) => {
+    let { body } = req;
+    const iduser = req.params.id;
     try {
-        const petition = await createProjectM(iduser,body);
+        const petition = await createProjectM(iduser, body);
         console.log(petition);
         if (typeof petition == 'string') {
             res.status(404).json({
@@ -102,10 +109,10 @@ const updateProject = async (req, res) => {
 
     const { body } = req;
     const { pid } = req.params;//id del proyecto a editar
-    console.log(req.params , req.query);
+    console.log(req.params, req.query);
     try {
-        const petition = await updateProjectM(pid,body);
-        if (typeof petition=='string') {
+        const petition = await updateProjectM(pid, body);
+        if (typeof petition == 'string') {
             console.log(petition)
             res.status(404).json({
                 ok: true,
@@ -128,11 +135,11 @@ const updateProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
 
-    let {pid}=req.params;
-    console.log(req.params,req.query)
+    let { pid } = req.params;
+    console.log(req.params, req.query)
     try {
         const petition = await deleteProjectM(pid);
-        if (typeof petition=='string') {
+        if (typeof petition == 'string') {
             res.status(404).json({
                 ok: false,
                 msg: petition
