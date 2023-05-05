@@ -59,7 +59,6 @@ const getUsers = async (_req, res) => {
     let data;
 
     try {
-
         data = await getAllUsers()
         console.log('hallando todos los usuarios');
         console.log(data)
@@ -106,9 +105,9 @@ const createUser = async (req, res) => {
         //     const imageName = req.file ? req.file.path : "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
         const { body } = req;
 
-        const petition = await createUserM(body, imageName);
-
-        if (petition.ok) {
+        const petition = await createUserM(body);
+        console.log(petition)
+        if (!petition) {
             res.status(200).json({
                 ok: true,
                 msg: 'Usuario creado'
@@ -116,7 +115,7 @@ const createUser = async (req, res) => {
         } else {
             res.status(404).json({
                 ok: false,
-                msg: petition.detail
+                msg: petition
             });
         }
         //   });

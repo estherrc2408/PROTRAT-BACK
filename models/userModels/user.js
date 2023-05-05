@@ -18,6 +18,7 @@ const getAllUsers = async () =>{
     let client, response;
     try{
         client=await pool.connect()
+        console.log('hallando')
         const data = await client.query(getAllUsersQ)
         response=data.rows
     }catch(error){
@@ -62,7 +63,7 @@ const getUserById = async (id) =>{
 }
 
 //CREAR UN NUEVO USUARIO
-const createUserM = async ({email,password,nickname,firstName,lastName,birthDate,rol},imageName) =>{
+const createUserM = async ({email,password,nickname,firstName,lastName,birthDate,rol}) =>{
     let client;
 
     try{
@@ -75,17 +76,22 @@ const createUserM = async ({email,password,nickname,firstName,lastName,birthDate
             firstName,
             lastName,
             birthDate,
-            rol,
-            imageName
+            rol
           ];
 
         client = await pool.connect();
         await client.query(createUserQ,values);
-
-        return {ok:true};
+        
     }catch(error){
-        console.log(error)
-        return error;
+        console.log(error.column!=undefined)
+        if(error.column!=undefined){
+            let customError = `El campo ${error.column} debe estar completo`;
+            return customError;
+        }else{
+            let customError = error.detail;
+            console.log(customError);
+            return customError;   
+        }
     }finally{
         client.release()
     }

@@ -2,6 +2,7 @@ const {validateLogM} = require('../models/logModels/log')
 
 const validateLog = async(req,res)=>{
     let {body} = req;
+    console.log(body)
     
     try{
         const petition = await validateLogM(body);
@@ -9,7 +10,10 @@ const validateLog = async(req,res)=>{
         if(petition.nickname){
             res.status(200).json({
                 ok:true,
-                msg:'Usuario accediendo'
+                msg:`Welcome ${petition.nickname}!`,
+                id:petition.iduser,
+                nickname:petition.nickname,
+                token:petition.token
             })
         }else{
             res.status(404).json({
@@ -23,7 +27,6 @@ const validateLog = async(req,res)=>{
             msg: 'Error al validar'
         })
     }
-
 }
 module.exports={
     validateLog

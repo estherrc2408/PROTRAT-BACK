@@ -1,4 +1,8 @@
-const {validateEmail,validatePass}=require('./logQueries');
+const {validateEmail}=require('./logQueries');
+const {jwtGenerator} = require('../../helpers/jws')
+//bcrypt
+const bcryptjs = require ('bcryptjs');
+
 
 const {Pool} = require('pg');
 
@@ -22,16 +26,20 @@ const validateLogM = async({email,password})=>{
             const customError = 'Credenciales no coincidentes'
             return customError;
         }else{
+            console.log('email existe')
             const user=response.shift();
-            const validate = await client.query(validatePass,[email,user.password]);
-            const responseValidator = validate.rows;
+            // const validate = await client.query(validatePass,[email,user.password]);
+            // const responseValidator = validate.rows;
             // console.log(responseValidator);
-            if(responseValidator.length==0){
+            const passUser= bcryptjs.compareSync(password,user.password);
+            if(!passUser){
                 const customError = 'Credenciales no coincidentes'
                 return customError;
             }else{
-                const nick=responseValidator.shift();
-                return nick;
+                const token = await jwtGenerator(user.iduser,user.nickname); 
+                const obj={...user,token}
+                console.log(obj);
+                return obj;
             }
         }
     }catch(error){
