@@ -63,7 +63,7 @@ const getUserById = async (id) =>{
 }
 
 //CREAR UN NUEVO USUARIO
-const createUserM = async ({email,password,nickname,firstName,lastName,birthDate,rol}) =>{
+const createUserM = async ({email,password,nickname,firstName,lastName,birthDate}) =>{
     let client;
 
     try{
@@ -76,7 +76,6 @@ const createUserM = async ({email,password,nickname,firstName,lastName,birthDate
             firstName,
             lastName,
             birthDate,
-            rol
           ];
 
         client = await pool.connect();
