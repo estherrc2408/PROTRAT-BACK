@@ -1,4 +1,4 @@
-const {getAllUsersQ, getUsersByNicknameQ, getUserByIdQ, createUserQ, updateUserQ, deleteUserQ} = require('./userQueries');
+const {getAllUsersQ, getUsersByNicknameQ, getUserByNicknameQ, createUserQ, updateUserQ, deleteUserQ} = require('./userQueries');
 
 const {Pool} = require('pg');
 
@@ -46,12 +46,12 @@ const getUsersByNickname = async(search) =>{
 }
 
 //OBTENER USUARIO POR SU ID
-const getUserById = async (id) =>{
+const getUserByNickname = async (nickname) =>{
     let client, response;
     try{
-        console.log(id);
+        console.log(nickname);
         client = await pool.connect();
-        const data = await client.query(getUserByIdQ,[id]);
+        const data = await client.query(getUserByNicknameQ,[nickname]);
         response = data.rows;
         console.log(response)
     }catch(error){
@@ -139,7 +139,7 @@ const deleteUserM = async (id) =>{
 module.exports={
     getAllUsers,
     getUsersByNickname,
-    getUserById,
+    getUserByNickname,
     createUserM,
     updateUserM,
     deleteUserM

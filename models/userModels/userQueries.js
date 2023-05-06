@@ -10,11 +10,11 @@ const userQueries = {
     FROM users
     WHERE rol='standar' AND nickname LIKE '%' || $1 || '%'`,
     //trae todos los perfiles que tengan un nickname con las palabras contenidas en el search enviado
-    getUserByIdQ:
-    `SELECT u.IdUser, u.Email, u.Nickname, u.First_Name, u.Last_Name, u.Birth_Date, u.City, u.Image, u.Rol, u.Instagram_nickname, u.Twitter_nickname, u.LinkedIn_url, COUNT(p.IdProject) AS num_projects
+    getUserByNicknameQ:
+    `	SELECT u.IdUser, u.Email, u.Nickname, u.First_Name, u.Last_Name, u.Birth_Date, u.City, u.Image, u.Rol, u.Instagram_nickname, u.Twitter_nickname, u.LinkedIn_url, COUNT(p.IdProject) AS num_projects
     FROM users AS u
     LEFT JOIN projects AS p ON u.IdUser = p.IdUser
-	WHERE u.IdUser = $1
+	WHERE u.Nickname = $1
     GROUP BY u.IdUser`,
     //trae los datos de un usuario con un id concreto salvo su contraseña y con el plus de el n´´umero de proyectos que ha realizado
     createUserQ:
