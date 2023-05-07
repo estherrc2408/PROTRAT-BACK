@@ -97,12 +97,14 @@ const createUserM = async ({email,password,nickname,firstName,lastName,birthDate
 }
 
 //ACTUALIZAR UN USUARIO POR SU ID
-const updateUserM = async ({email,password,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl},id)=>{
+const updateUserM = async ({email,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl},id)=>{
     let client;
     try{
+        console.log(email,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl,id)
         client = await pool.connect();
-        await client.query(updateUserQ,[email,password,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl,id]);
+        await client.query(updateUserQ,[email,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl,id]);
     }catch(error){
+        console.log(error)
         if(error.column!=undefined){
             let customError = `El campo ${error.column} debe estar completo`;
             return customError;

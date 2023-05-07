@@ -150,7 +150,7 @@ const updateUser = async (req, res) => {
             }
 
             const imageName = req.file ? req.file.path : "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
-            console.log(imageName);
+            // console.log(imageName);
             const petition = await updateUserM(body, id, imageName);
            
             if (typeof petition == 'string') {

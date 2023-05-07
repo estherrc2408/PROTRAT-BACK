@@ -23,9 +23,9 @@ const userQueries = {
     //tan solo permite rellenar los datos del formulario de registro
     updateUserQ:
     `UPDATE users
-    SET (email,password,nickname,first_name,last_name,birth_date,city,image,instagram_nickname,twitter_nickname,linkedin_url)
-	= ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
-    WHERE idUser=$12`,
+    SET (email,nickname,first_name,last_name,birth_date,city,image,instagram_nickname,twitter_nickname,linkedin_url)
+	= ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+    WHERE idUser=$11`,
     //actualiza los doce valores del usuario con el id mandado en el $12
     deleteUserQ:
     `DELETE
