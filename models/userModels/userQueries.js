@@ -3,6 +3,7 @@ const userQueries = {
     `SELECT u.IdUser, u.Email, u.Nickname, u.First_Name, u.Last_Name, u.Birth_Date, u.City, u.Image, u.Rol, u.Instagram_nickname, u.Twitter_nickname, u.LinkedIn_url, COUNT(p.IdProject) AS num_projects
     FROM users AS u
     LEFT JOIN projects AS p ON u.IdUser = p.IdUser
+	WHERE u.Rol='standar'
     GROUP BY u.IdUser`,
     //trae todos los usuarios con todos sus datos saldo el password más una columna con el total proyectos que han realizado
     getUsersByNicknameQ:
