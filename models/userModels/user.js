@@ -7,10 +7,10 @@ const bcryptjs = require ('bcryptjs');
 
 //cambiar al pasar a Elephant
 const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    database: 'protratUsers',
-    password: 'admin'
+    host: process.env.HOST,
+    user: process.env.USER,
+    database: process.env.DDBB,
+    password: process.env.PASS
 });
 
 //OBTENER TODOS LOS USUARIOS
@@ -18,10 +18,12 @@ const getAllUsers = async () =>{
     let client, response;
     try{
         client=await pool.connect()
+        console.log(client);
         console.log('hallando')
         const data = await client.query(getAllUsersQ)
         response=data.rows
     }catch(error){
+        console.log(error)
         throw error
     }finally{
         client.release()
@@ -82,7 +84,7 @@ const createUserM = async ({email,password,nickname,firstName,lastName,birthDate
         await client.query(createUserQ,values);
         
     }catch(error){
-        console.log(error.column!=undefined)
+        console.log(error)
         if(error.column!=undefined){
             let customError = `El campo ${error.column} debe estar completo`;
             return customError;

@@ -89,21 +89,8 @@ const getUsers = async (_req, res) => {
 const createUser = async (req, res) => {
 
     try {
-        //   await upload.single('image')(req, res, async function (err) {
-        //     if (err instanceof multer.MulterError) {
-        //       return res.status(500).json({
-        //         ok: false,
-        //         msg: 'Error al cargar la imagen'
-        //       });
-        //     } else if (err) {
-        //       return res.status(500).json({
-        //         ok: false,
-        //         msg: 'Error al cargar la imagen'
-        //       });
-        //     }
-
-        //     const imageName = req.file ? req.file.path : "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
         const { body } = req;
+        console.log(req.body)
 
         const petition = await createUserM(body);
         console.log(petition)

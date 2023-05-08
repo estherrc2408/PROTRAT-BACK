@@ -8,10 +8,10 @@ const {Pool} = require('pg');
 
 //cambiar al pasar a Elephant
 const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    database: 'protratUsers',
-    password: 'admin'
+    host: process.env.HOST,
+    user: process.env.USER,
+    database: process.env.DDBB,
+    password: process.env.PASS
 });
 
 
