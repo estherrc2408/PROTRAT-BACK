@@ -4,10 +4,10 @@ const {Pool} = require('pg');
 
 //cambiar al pasar a Elephant
 const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    database: 'protratUsers',
-    password: 'admin'
+    host: process.env.HOST,
+    user: process.env.USER,
+    database: process.env.DDBB,
+    password: process.env.PASS
 });
 
 //OBTENER TODOS LOS PROYECTOS
@@ -47,12 +47,11 @@ const getUserProjectsM = async(id) =>{
     return response
 }
 //OBTENER DATOS DE UN PROYECTO CONCRETO POR SU ID
-const getOneProjectM = async(id) =>{
-    console.log(id);
+const getOneProjectM = async(nickname) =>{
     let client, response;
     try{
         client = await pool.connect();
-        const data = await client.query(getOneProjectQ,[id]);
+        const data = await client.query(getOneProjectQ,[nickname]);
         response = data.rows;   
     }catch(error){
         throw error;
@@ -82,6 +81,7 @@ const createProjectM = async (iduser,{project_date, title, subtitle, description
         await client.query(createProjectQ,values);
 
     }catch(error){
+        console.log(error)
         // if(typeof title=='undefined'||typeof subtitle=='undefined'||typeof description=='undefined'){
         //     const customError = 'Debes rellenar los campos requeridos';
         //     console.log(customError)

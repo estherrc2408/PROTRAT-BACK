@@ -7,9 +7,10 @@ const projectQueries={
     ,
     getUserProjectsQ:
     `
-    SELECT idproject, iduser, project_date, title, subtitle, principal_img, publication_project
+    SELECT idproject, users.iduser, project_date, title, subtitle, principal_img, publication_project
     FROM projects
-    WHERE IdUser = $1
+    JOIN users ON projects.iduser = users.iduser
+    WHERE users.nickname = $1
     `
     ,
     getOneProjectQ:

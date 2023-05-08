@@ -7,7 +7,7 @@ const router=express.Router();
 
 
 router.get('/nick/',getUsersBySearch);
-router.get('/id/:id',getOneUser);
+router.get('/nickname/:nickname',getOneUser);
 router.get('/',getUsers);
 
 //  getAllUsers Usado solo por home del admin, vista de todos los usuarios

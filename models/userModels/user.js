@@ -1,4 +1,4 @@
-const {getAllUsersQ, getUsersByNicknameQ, getUserByIdQ, createUserQ, updateUserQ, deleteUserQ} = require('./userQueries');
+const {getAllUsersQ, getUsersByNicknameQ, getUserByNicknameQ, createUserQ, updateUserQ, deleteUserQ} = require('./userQueries');
 
 const {Pool} = require('pg');
 
@@ -7,10 +7,10 @@ const bcryptjs = require ('bcryptjs');
 
 //cambiar al pasar a Elephant
 const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    database: 'protratUsers',
-    password: 'admin'
+    host: process.env.HOST,
+    user: process.env.USER,
+    database: process.env.DDBB,
+    password: process.env.PASS
 });
 
 //OBTENER TODOS LOS USUARIOS
@@ -18,9 +18,12 @@ const getAllUsers = async () =>{
     let client, response;
     try{
         client=await pool.connect()
+        console.log(client);
+        console.log('hallando')
         const data = await client.query(getAllUsersQ)
         response=data.rows
     }catch(error){
+        console.log(error)
         throw error
     }finally{
         client.release()
@@ -45,12 +48,12 @@ const getUsersByNickname = async(search) =>{
 }
 
 //OBTENER USUARIO POR SU ID
-const getUserById = async (id) =>{
+const getUserByNickname = async (nickname) =>{
     let client, response;
     try{
-        console.log(id);
+        console.log(nickname);
         client = await pool.connect();
-        const data = await client.query(getUserByIdQ,[id]);
+        const data = await client.query(getUserByNicknameQ,[nickname]);
         response = data.rows;
         console.log(response)
     }catch(error){
@@ -62,7 +65,7 @@ const getUserById = async (id) =>{
 }
 
 //CREAR UN NUEVO USUARIO
-const createUserM = async ({email,password,nickname,firstName,lastName,birthDate,rol},imageName) =>{
+const createUserM = async ({email,password,nickname,firstName,lastName,birthDate}) =>{
     let client;
 
     try{
@@ -75,29 +78,35 @@ const createUserM = async ({email,password,nickname,firstName,lastName,birthDate
             firstName,
             lastName,
             birthDate,
-            rol,
-            imageName
           ];
 
         client = await pool.connect();
         await client.query(createUserQ,values);
-
-        return {ok:true};
+        
     }catch(error){
         console.log(error)
-        return error;
+        if(error.column!=undefined){
+            let customError = `El campo ${error.column} debe estar completo`;
+            return customError;
+        }else{
+            let customError = error.detail;
+            console.log(customError);
+            return customError;   
+        }
     }finally{
         client.release()
     }
 }
 
 //ACTUALIZAR UN USUARIO POR SU ID
-const updateUserM = async ({email,password,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl},id)=>{
+const updateUserM = async ({email,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl},id)=>{
     let client;
     try{
+        console.log(email,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl,id)
         client = await pool.connect();
-        await client.query(updateUserQ,[email,password,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl,id]);
+        await client.query(updateUserQ,[email,nickname,firstName,lastName,birthDate,city,image,igNickname,twtNickname,lnkUrl,id]);
     }catch(error){
+        console.log(error)
         if(error.column!=undefined){
             let customError = `El campo ${error.column} debe estar completo`;
             return customError;
@@ -134,7 +143,7 @@ const deleteUserM = async (id) =>{
 module.exports={
     getAllUsers,
     getUsersByNickname,
-    getUserById,
+    getUserByNickname,
     createUserM,
     updateUserM,
     deleteUserM

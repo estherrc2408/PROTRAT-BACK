@@ -1,7 +1,7 @@
-const { query } = require('express');
-const { getAllUsers, getUsersByNickname, getUserById, createUserM, updateUserM, deleteUserM } = require('../models/userModels/user');
+
+const { getAllUsers, getUsersByNickname, getUserByNickname, createUserM, updateUserM, deleteUserM } = require('../models/userModels/user');
 const { storage, upload } = require('../config/multer')
-const { multer } = require('multer');
+const multer = require('multer');
 
 
 const getUsersBySearch = async (req, res) => {
@@ -32,12 +32,12 @@ const getUsersBySearch = async (req, res) => {
 
 const getOneUser = async (req, res) => {
     let data;
-    let { id } = req.params;
-    console.log(!id)
+    let { nickname } = req.params;
+    console.log(!nickname)
     try {
-        if (id) {
-            console.log('hallando usuarios por id');
-            data = await getUserById(id);
+        if (nickname) {
+            console.log('hallando usuario por nickname');
+            data = await getUserByNickname(nickname);
         }
 
         res.status(200).json({
@@ -59,7 +59,6 @@ const getUsers = async (_req, res) => {
     let data;
 
     try {
-
         data = await getAllUsers()
         console.log('hallando todos los usuarios');
         console.log(data)
@@ -90,25 +89,12 @@ const getUsers = async (_req, res) => {
 const createUser = async (req, res) => {
 
     try {
-        //   await upload.single('image')(req, res, async function (err) {
-        //     if (err instanceof multer.MulterError) {
-        //       return res.status(500).json({
-        //         ok: false,
-        //         msg: 'Error al cargar la imagen'
-        //       });
-        //     } else if (err) {
-        //       return res.status(500).json({
-        //         ok: false,
-        //         msg: 'Error al cargar la imagen'
-        //       });
-        //     }
-
-        //     const imageName = req.file ? req.file.path : "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
         const { body } = req;
+        console.log(req.body)
 
-        const petition = await createUserM(body, imageName);
-
-        if (petition.ok) {
+        const petition = await createUserM(body);
+        console.log(petition)
+        if (!petition) {
             res.status(200).json({
                 ok: true,
                 msg: 'Usuario creado'
@@ -116,7 +102,7 @@ const createUser = async (req, res) => {
         } else {
             res.status(404).json({
                 ok: false,
-                msg: petition.detail
+                msg: petition
             });
         }
         //   });
@@ -136,22 +122,24 @@ const updateUser = async (req, res) => {
 
     try {
         await upload.single('image')(req, res, async function (err) {
+            
             if (err instanceof multer.MulterError) {
                 return res.status(500).json({
                     ok: false,
-                    msg: 'Error al cargar la imagen'
+                    msg: 'Error al cargar la imagen 1'
                 });
             } else if (err) {
+                console.log(err)
                 return res.status(500).json({
                     ok: false,
-                    msg: 'Error al cargar la imagen'
+                    msg: 'Error al cargar la imagen 2'
                 });
             }
 
             const imageName = req.file ? req.file.path : "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg";
-
+            // console.log(imageName);
             const petition = await updateUserM(body, id, imageName);
-
+           
             if (typeof petition == 'string') {
                 console.log(petition)
                 res.status(404).json({

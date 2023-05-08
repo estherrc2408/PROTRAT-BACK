@@ -1,13 +1,10 @@
 const validateQueries = {
     validateEmail:
     `
-    SELECT email, password
+    SELECT iduser, email, password, nickname, rol
     FROM users
-    WHERE email=$1
+    WHERE email=$1;
     `
-    ,
-    validatePass:``
-
 };
 
 module.exports=validateQueries;
