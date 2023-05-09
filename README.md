@@ -140,5 +140,15 @@ La restricción "fk\_user" es una clave externa que asegura que el "idUser" en l
 El diagrama de tablas creado relacionaría los usuarios a uno o muchos proyectos:
 ![diagramasql](https://user-images.githubusercontent.com/123939737/237001507-ade9dd8c-5e64-4493-a826-2b34cd7362f9.JPG)
 
+## H2 Enlace al despliegue:
+https://protrat-back.onrender.com
+
+## H3 Enlace a las colecciones de endpoints creados en postman durante el desarrollo
+v1- Algunos de losendpoints creados no están en uso en esta versión
+Endpoints de usuarios.
+https://documenter.getpostman.com/view/26092496/2s93eZwWPH
+
+Endpoints de proyectos.
+https://documenter.getpostman.com/view/26092496/2s93eVWt64
 
 
