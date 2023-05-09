@@ -1,6 +1,21 @@
 # PROTRAT-BACK
-Este script de SQL crea dos tablas: "users" y "projects".
+## H2 Inicializar el proyecto
+Instalación de módulos y puesta en marcha del proyecto
+1. npm install
+2. npm start
 
+## H3 Módulos utilizados:
+1. npm i express
+2. npm i cors
+3. npm i dotenv
+4. npm i pg
+5. npm i bcryptjs	
+6.npm i multer
+
+
+## H2 Creación de tablas en postgres
+Este script de SQL crea dos tablas: "users" y "projects".
+~~~
 DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users(
@@ -66,7 +81,7 @@ CONSTRAINT fk\_user
 ON UPDATE CASCADE ON DELETE CASCADE
 
 );
-
+~~~
 
 
 
