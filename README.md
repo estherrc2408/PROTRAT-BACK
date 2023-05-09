@@ -121,3 +121,9 @@ La tabla "projects" tiene las siguientes columnas:
 "publication\_project": un valor de fecha que representa la fecha de publicación del proyecto. Se establece en la fecha actual si no se proporciona.
 
 La restricción "fk\_user" es una clave externa que asegura que el "idUser" en la tabla "projects" hace referencia a un "iduser" válido en la tabla "users". Además, se establece que si se actualiza o elimina un usuario, se actualizarán o eliminarán también todos los proyectos asociados a ese usuario (usando "ON UPDATE CASCADE ON DELETE CASCADE").
+
+El diagrama de tablas creado relacionaría los usuarios a uno o muchos proyectos:
+![diagramasql](https://user-images.githubusercontent.com/123939737/237001507-ade9dd8c-5e64-4493-a826-2b34cd7362f9.JPG)
+
+
+
