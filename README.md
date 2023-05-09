@@ -1,44 +1,74 @@
 # PROTRAT-BACK
-Queies reación de las tablas:
+Este script de SQL crea dos tablas: "users" y "projects".
 
 DROP TABLE IF EXISTS users CASCADE;
+
 CREATE TABLE users(
- iduser int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+iduser int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
 email varchar (60) NOT NULL UNIQUE,
+
 password varchar(61) NOT NULL,
-  nickname varchar(30) NOT NULL UNIQUE, 
-  first_name varchar(30) NOT NULL, 
-  last_name varchar(30) NOT NULL ,
- birth_date date NOT NULL CHECK (Birth_Date>'1900-01-01'),
+
+nickname varchar(30) NOT NULL UNIQUE,
+
+first\_name varchar(30) NOT NULL,
+
+last\_name varchar(30) NOT NULL ,
+
+birth\_date date NOT NULL CHECK (Birth\_Date>'1900-01-01'),
+
 city varchar(60),
-  image varchar(300) DEFAULT 'https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg',
+
+image varchar(300) DEFAULT 'https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg',
+
 rol varchar(10) NOT NULL CHECK (rol='admin' OR rol='standar'),
-instagram_nickname varchar(100),
-twitter_nickname varchar(100),
-linkedIn_url varchar(300),
+
+instagram\_nickname varchar(100),
+
+twitter\_nickname varchar(100),
+
+linkedIn\_url varchar(300),
+
 );
 
 DROP TABLE IF EXISTS projects CASCADE;
+
 CREATE TABLE projects(
+
 idProject int GENERATED ALWAYS AS IDENTITY,
+
 idUser int,
-project_date date CHECK (project_date>'1900-01-01' AND proyect_date<Now()),
+
+project\_date date CHECK (project\_date>'1900-01-01' AND proyect\_date<Now()),
+
 title varchar(60) NOT NULL,
+
 subtitle varchar(200) NOT NULL,
+
 description varchar(1000) NOT NULL,
+
 location varchar(60),
-principal_img varchar(300),
-publication_project date DEFAULT Now(),
+
+principal\_img varchar(300),
+
+publication\_project date DEFAULT Now(),
 
 PRIMARY KEY (idProject),
-CONSTRAINT fk_user
-	FOREIGN KEY (idUser)
-		REFERENCES users(idUser)
+
+CONSTRAINT fk\_user
+
+`	`FOREIGN KEY (idUser)
+
+`		`REFERENCES users(idUser)
+
 ON UPDATE CASCADE ON DELETE CASCADE
+
 );
 
 
-Estas queries de SQL crean dos tablas: "users" y "projects".
+
 
 La primera línea es una medida precautoria que elimina las tablas "users" y "projects" si ya existen (usando la declaración "DROP TABLE IF EXISTS") y cualquier objeto dependiente (usando "CASCADE").
 
